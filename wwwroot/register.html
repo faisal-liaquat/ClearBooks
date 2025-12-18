@@ -1,0 +1,470 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClearBooks - Join the Elite</title>
+    <link rel="stylesheet" href="css/auth_styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <!--Background -->
+    <div class="geometric-bg"></div>
+
+    <!--Particle System -->
+    <div class="particle-system" id="particleSystem"></div>
+
+    <div class="auth-container">
+        <div class="auth-card" id="authCard">
+            <div class="auth-header">
+                <h1>ClearBooks</h1>
+                <p>Enterprise Financial Management Platform</p>
+            </div>
+
+            <div class="auth-content">
+                <h2>Join now!</h2>
+                <p class="auth-subtitle">Create your premium financial workspace</p>
+
+                <!--Messages -->
+                <div id="error-message" class="message error-message" style="display: none;"></div>
+                <div id="success-message" class="message success-message" style="display: none;"></div>
+
+                <form id="register-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="name">
+                            <span>👨‍💼</span> Full Name
+                        </label>
+                        <input type="text" id="name" name="name" placeholder="Enter your professional name" required autocomplete="name">
+                        <span class="error-message" id="name-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="username">
+                            <span>🎯</span> Username
+                        </label>
+                        <input type="text" id="username" name="username" placeholder="Choose your unique identifier" required autocomplete="username">
+                        <span class="error-message" id="username-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">
+                            <span>📧</span> Email Address
+                        </label>
+                        <input type="email" id="email" name="email" placeholder="Your professional email" required autocomplete="email">
+                        <span class="error-message" id="email-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">
+                            <span>🔐</span> Password
+                        </label>
+                        <input type="password" id="password" name="password" placeholder="Create ultra-secure password" required autocomplete="new-password">
+                        <div class="password-strength" id="passwordStrength">
+                            <div class="strength-bar">
+                                <div class="strength-fill" id="strengthFill"></div>
+                            </div>
+                            <div class="strength-text" id="strengthText">Enter password to check strength</div>
+                        </div>
+                        <span class="error-message" id="password-error"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm-password">
+                            <span>🔒</span> Confirm Password
+                        </label>
+                        <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your secure password" required autocomplete="new-password">
+                        <span class="error-message" id="confirm-password-error"></span>
+                    </div>
+
+                    <button type="submit" id="register-btn" class="auth-btn">
+                        <span class="btn-text">🚀 Launch My Account</span>
+                        <span class="btn-loader" style="display: none;">
+                            <span class="loader-spinner"></span>
+                            Creating Elite Account...
+                        </span>
+                    </button>
+                </form>
+
+                <div class="auth-footer">
+                    <p>Already part of the team? <a href="login.html">← Access Dashboard</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-background">
+            <div class="bg-shape shape-1"></div>
+            <div class="bg-shape shape-2"></div>
+            <div class="bg-shape shape-3"></div>
+        </div>
+    </div>
+
+    <script src="js/auth_scripts.js"></script>
+    <script>
+        //Initialize register page when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            AuthManager.initRegister();
+
+            // Initialize premium effects
+            initPremiumEffects();
+            initPasswordStrength();
+            initAdvancedValidation();
+        });
+
+        function initPremiumEffects() {
+            //Create dynamic particle system
+            createParticleSystem();
+
+            //Add premium card interactions
+            initCardInteractions();
+
+            //Add premium input effects
+            initInputEffects();
+
+            //Add form progression animation
+            initFormProgression();
+        }
+
+        function createParticleSystem() {
+            const particleSystem = document.getElementById('particleSystem');
+            const particleCount = 20;
+
+            for (let i = 0; i < particleCount; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 15 + 's';
+                    particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                    particleSystem.appendChild(particle);
+
+                    setTimeout(() => {
+                        if (particle.parentNode) {
+                            particle.parentNode.removeChild(particle);
+                        }
+                    }, 25000);
+                }, i * 150);
+            }
+
+            setInterval(() => {
+                if (particleSystem.children.length < particleCount) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.animationDelay = '0s';
+                    particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                    particleSystem.appendChild(particle);
+
+                    setTimeout(() => {
+                        if (particle.parentNode) {
+                            particle.parentNode.removeChild(particle);
+                        }
+                    }, 25000);
+                }
+            }, 800);
+        }
+
+        function initCardInteractions() {
+            const authCard = document.getElementById('authCard');
+
+            authCard.addEventListener('mousemove', (e) => {
+                const rect = authCard.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+                authCard.style.background = `
+                        radial-gradient(circle at ${x}% ${y}%,
+                            rgba(255, 255, 255, 0.98) 0%,
+                            rgba(248, 250, 252, 0.95) 40%,
+                            rgba(240, 245, 251, 0.92) 100%)
+                    `;
+
+                const rotateX = (y - 50) * 0.08;
+                const rotateY = (x - 50) * -0.08;
+                authCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(0)`;
+            });
+
+            authCard.addEventListener('mouseleave', () => {
+                authCard.style.background = `linear-gradient(135deg,
+                        rgba(255, 255, 255, 0.95) 0%,
+                        rgba(255, 255, 255, 0.9) 50%,
+                        rgba(248, 250, 252, 0.95) 100%)`;
+                authCard.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0)';
+            });
+        }
+
+        function initInputEffects() {
+            const inputs = document.querySelectorAll('input');
+
+            inputs.forEach((input, index) => {
+                input.addEventListener('focus', () => {
+                    createRippleEffect(input);
+
+                    if (typeof gsap !== 'undefined') {
+                        gsap.to(input, {
+                            duration: 0.3,
+                            scale: 1.02,
+                            boxShadow: '0 0 0 4px rgba(0, 212, 255, 0.2), 0 20px 40px rgba(0, 0, 0, 0.3)',
+                            ease: "power2.out"
+                        });
+                    }
+                });
+
+                input.addEventListener('blur', () => {
+                    if (typeof gsap !== 'undefined') {
+                        gsap.to(input, {
+                            duration: 0.3,
+                            scale: 1,
+                            ease: "power2.out"
+                        });
+                    }
+                });
+
+                input.addEventListener('input', () => {
+                    if (typeof gsap !== 'undefined') {
+                        gsap.fromTo(input,
+                            { x: -1 },
+                            { x: 0, duration: 0.1, ease: "power2.out" }
+                        );
+                    }
+                });
+            });
+        }
+
+        function createRippleEffect(element) {
+            const ripple = document.createElement('div');
+            const rect = element.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+
+            ripple.style.cssText = `
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    border-radius: 50%;
+                    background: rgba(0, 212, 255, 0.3);
+                    transform: scale(0);
+                    pointer-events: none;
+                    left: 50%;
+                    top: 50%;
+                    margin-left: -${size / 2}px;
+                    margin-top: -${size / 2}px;
+                `;
+
+            element.style.position = 'relative';
+            element.style.overflow = 'hidden';
+            element.appendChild(ripple);
+
+            if (typeof gsap !== 'undefined') {
+                gsap.to(ripple, {
+                    duration: 0.6,
+                    scale: 1,
+                    opacity: 0,
+                    ease: "power2.out",
+                    onComplete: () => ripple.remove()
+                });
+            }
+        }
+
+        function initPasswordStrength() {
+            const passwordInput = document.getElementById('password');
+            const strengthFill = document.getElementById('strengthFill');
+            const strengthText = document.getElementById('strengthText');
+
+            //Add password strength styles
+            const strengthStyles = `
+                    <style>
+                    .password-strength {
+                        margin-top: 10px;
+                        opacity: 0;
+                        transition: opacity 0.3s ease;
+                    }
+                    .strength-bar {
+                        width: 100%;
+                        height: 4px;
+                        background: rgba(255, 255, 255, 0.1);
+                        border-radius: 2px;
+                        overflow: hidden;
+                        margin-bottom: 8px;
+                    }
+                    .strength-fill {
+                        height: 100%;
+                        width: 0%;
+                        border-radius: 2px;
+                        transition: all 0.3s ease;
+                        background: linear-gradient(90deg, #ff3366, #ff6b3d, #ffa500, #00d4ff);
+                    }
+                    .strength-text {
+                        font-size: 12px;
+                        color: rgba(255, 255, 255, 0.7);
+                        font-weight: 500;
+                    }
+                    </style>
+                `;
+            document.head.insertAdjacentHTML('beforeend', strengthStyles);
+
+            passwordInput.addEventListener('input', () => {
+                const password = passwordInput.value;
+                const strength = calculatePasswordStrength(password);
+
+                const passwordStrengthContainer = document.getElementById('passwordStrength');
+
+                if (password.length > 0) {
+                    passwordStrengthContainer.style.opacity = '1';
+                    strengthFill.style.width = strength + '%';
+
+                    if (strength < 25) {
+                        strengthFill.style.background = '#ff3366';
+                        strengthText.textContent = 'Weak - Add more characters';
+                    } else if (strength < 50) {
+                        strengthFill.style.background = 'linear-gradient(90deg, #ff3366, #ff6b3d)';
+                        strengthText.textContent = 'Fair - Add numbers and symbols';
+                    } else if (strength < 75) {
+                        strengthFill.style.background = 'linear-gradient(90deg, #ff6b3d, #ffa500)';
+                        strengthText.textContent = 'Good - Almost there!';
+                    } else {
+                        strengthFill.style.background = 'linear-gradient(90deg, #ffa500, #00d4ff)';
+                        strengthText.textContent = 'Excellent - Ultra secure!';
+                    }
+                } else {
+                    passwordStrengthContainer.style.opacity = '0';
+                }
+            });
+        }
+
+        function calculatePasswordStrength(password) {
+            let strength = 0;
+            const checks = {
+                length: password.length >= 8,
+                lowercase: /[a-z]/.test(password),
+                uppercase: /[A-Z]/.test(password),
+                numbers: /\d/.test(password),
+                symbols: /[^A-Za-z0-9]/.test(password),
+                longLength: password.length >= 12
+            };
+
+            Object.values(checks).forEach(check => {
+                if (check) strength += 100 / 6;
+            });
+
+            return Math.min(100, strength);
+        }
+
+        function initAdvancedValidation() {
+            const inputs = document.querySelectorAll('input');
+
+            inputs.forEach(input => {
+                input.addEventListener('input', () => {
+                    validateInputAdvanced(input);
+                });
+
+                input.addEventListener('blur', () => {
+                    validateInputAdvanced(input);
+                });
+            });
+        }
+
+        function validateInputAdvanced(input) {
+            const value = input.value.trim();
+            let isValid = false;
+
+            switch (input.type) {
+                case 'text':
+                    if (input.name === 'name') {
+                        isValid = value.length >= 2 && /^[a-zA-Z\s]+$/.test(value);
+                    } else if (input.name === 'username') {
+                        isValid = value.length >= 3 && /^[a-zA-Z0-9_]+$/.test(value);
+                    }
+                    break;
+                case 'email':
+                    isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+                    break;
+                case 'password':
+                    if (input.name === 'password') {
+                        isValid = value.length >= 6;
+                    } else if (input.name === 'confirm-password') {
+                        const password = document.getElementById('password').value;
+                        isValid = value === password && value.length > 0;
+                    }
+                    break;
+            }
+
+            updateInputValidation(input, isValid);
+        }
+
+        function updateInputValidation(input, isValid) {
+            if (isValid) {
+                input.style.borderColor = 'rgba(0, 255, 127, 0.6)';
+                input.style.boxShadow = '0 0 0 2px rgba(0, 255, 127, 0.2)';
+                addSuccessIndicator(input);
+            } else {
+                input.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+                input.style.boxShadow = 'none';
+                removeSuccessIndicator(input);
+            }
+        }
+
+        function addSuccessIndicator(input) {
+            if (!input.parentNode.querySelector('.success-indicator')) {
+                const indicator = document.createElement('div');
+                indicator.className = 'success-indicator';
+                indicator.innerHTML = '✓';
+                indicator.style.cssText = `
+                        position: absolute;
+                        right: 15px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        color: #00ff7f;
+                        font-weight: bold;
+                        font-size: 18px;
+                        opacity: 0;
+                        transition: opacity 0.3s ease;
+                    `;
+
+                input.parentNode.style.position = 'relative';
+                input.parentNode.appendChild(indicator);
+
+                setTimeout(() => indicator.style.opacity = '1', 100);
+            }
+        }
+
+        function removeSuccessIndicator(input) {
+            const indicator = input.parentNode.querySelector('.success-indicator');
+            if (indicator) indicator.remove();
+        }
+
+        function initFormProgression() {
+            const inputs = document.querySelectorAll('input');
+            let completedFields = 0;
+
+            inputs.forEach(input => {
+                input.addEventListener('input', () => {
+                    const newCompletedFields = Array.from(inputs).filter(inp => inp.value.trim().length > 0).length;
+
+                    if (newCompletedFields > completedFields) {
+                        //Add celebration effect for progress
+                        if (typeof gsap !== 'undefined') {
+                            gsap.from(input.parentNode, {
+                                duration: 0.5,
+                                scale: 0.95,
+                                ease: "back.out(1.7)"
+                            });
+                        }
+                    }
+
+                    completedFields = newCompletedFields;
+                    updateProgressIndicator(completedFields / inputs.length);
+                });
+            });
+        }
+
+        function updateProgressIndicator(progress) {
+            //This could update a progress bar if we want to add one
+            const authCard = document.getElementById('authCard');
+            const hue = progress * 120; // From red to green
+            authCard.style.boxShadow = `0 32px 64px rgba(${255 - progress * 255}, ${progress * 255}, 100, 0.4)`;
+        }
+    </script>
+</body>
+</html>

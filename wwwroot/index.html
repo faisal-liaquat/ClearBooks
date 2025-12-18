@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClearBooks - Financial Command Center</title>
+    <link rel="stylesheet" href="css/dashboard_styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <div class="container">
+        <!--Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>ClearBooks</h2>
+                <div class="user-info">
+                    <p>Welcome back, <span id="user-name">Loading...</span></p>
+                    <button id="logout-btn" class="logout-btn">🚪 Logout</button>
+                </div>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="index.html" class="active">📊 Dashboard</a></li>
+                <li><a href="coa.html">📋 Chart of Accounts</a></li>
+                <li><a href="gl_mapping.html">🔗 GL Mapping</a></li>
+                <li><a href="voucher_entry.html">📝 Voucher Entry</a></li>
+                <li><a href="payment_form.html">💳 Payment Form</a></li>
+                <li><a href="receipts.html">🧾 Receipts</a></li>
+                <li><a href="searchview_form.html">🔍 Search & Reports</a></li>
+                <li><a href="reports.html">📊 Reports</a></li>
+                <li><a href="summary_reports.html">📈 Summary Reports</a></li>
+            </ul>
+        </div>
+
+        <!--Main Content -->
+        <div class="main-content">
+            <div class="content-header">
+                <h1>Financial Command Center</h1>
+                <div class="header-actions">
+                    <span class="welcome-text">👋 Hello, <span id="welcome-user-name">Professional</span></span>
+                </div>
+            </div>
+
+            <div class="dashboard-content">
+                <!--Statistics Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card" data-animation-delay="0">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-content">
+                            <h3>Chart of Accounts</h3>
+                            <p class="stat-number" id="accounts-count">-</p>
+                            <p class="stat-label">Total Accounts</p>
+                        </div>
+                        <a href="coa.html" class="stat-link">View Details →</a>
+                    </div>
+
+                    <div class="stat-card" data-animation-delay="0.1">
+                        <div class="stat-icon">📄</div>
+                        <div class="stat-content">
+                            <h3>Financial Vouchers</h3>
+                            <p class="stat-number" id="vouchers-count">-</p>
+                            <p class="stat-label">Total Vouchers</p>
+                        </div>
+                        <a href="voucher_entry.html" class="stat-link">View Details →</a>
+                    </div>
+
+                    <div class="stat-card" data-animation-delay="0.2">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-content">
+                            <h3>Payment Records</h3>
+                            <p class="stat-number" id="payments-count">-</p>
+                            <p class="stat-label">Total Payments</p>
+                        </div>
+                        <a href="payment_form.html" class="stat-link">View Details →</a>
+                    </div>
+
+                    <div class="stat-card" data-animation-delay="0.3">
+                        <div class="stat-icon">🧾</div>
+                        <div class="stat-content">
+                            <h3>Receipt Management</h3>
+                            <p class="stat-number" id="receipts-count">-</p>
+                            <p class="stat-label">Total Receipts</p>
+                        </div>
+                        <a href="receipts.html" class="stat-link">View Details →</a>
+                    </div>
+                </div>
+
+                <!--Quick Actions -->
+                <div class="quick-actions">
+                    <div class="section-header">
+                        <h2>Financial Operations</h2>
+                        <p>Execute common financial tasks with enterprise-grade tools</p>
+                    </div>
+                    <div class="actions-grid">
+                        <a href="coa.html" class="action-card" data-action="accounts">
+                            <div class="action-icon">➕</div>
+                            <h3>Create Account</h3>
+                            <p>Set up new chart of account entries with automated validation</p>
+                        </a>
+                        <a href="voucher_entry.html" class="action-card" data-action="vouchers">
+                            <div class="action-icon">📝</div>
+                            <h3>Generate Voucher</h3>
+                            <p>Record financial transactions with real-time balance updates</p>
+                        </a>
+                        <a href="payment_form.html" class="action-card" data-action="payments">
+                            <div class="action-icon">💸</div>
+                            <h3>Process Payment</h3>
+                            <p>Execute secure vendor payments with audit trails</p>
+                        </a>
+                        <a href="receipts.html" class="action-card" data-action="receipts">
+                            <div class="action-icon">📋</div>
+                            <h3>Record Receipt</h3>
+                            <p>Manage customer receipts with automated reconciliation</p>
+                        </a>
+                        <a href="gl_mapping.html" class="action-card" data-action="mapping">
+                            <div class="action-icon">🔗</div>
+                            <h3>GL Configuration</h3>
+                            <p>Configure advanced general ledger account mappings</p>
+                        </a>
+                        <a href="searchview_form.html" class="action-card" data-action="search">
+                            <div class="action-icon">🔍</div>
+                            <h3>Advanced Analytics</h3>
+                            <p>Search and analyze financial data with intelligent filters</p>
+                        </a>
+                        <a href="summary_reports.html" class="action-card" data-action="summary">
+                            <div class="action-icon">📈</div>
+                            <h3>Executive Reports</h3>
+                            <p>Generate comprehensive financial analytics and insights</p>
+                        </a>
+                        <a href="reports.html" class="action-card" data-action="reports">
+                            <div class="action-icon">📊</div>
+                            <h3>Detailed Reports</h3>
+                            <p>Create in-depth financial reports with custom parameters</p>
+                        </a>
+                    </div>
+                </div>
+
+                <!--System Status -->
+                <div class="recent-activity">
+                    <div class="section-header">
+                        <h2>System Health Monitor</h2>
+                        <p>Real-time status of all critical financial services</p>
+                    </div>
+                    <div class="status-grid">
+                        <div class="status-item">
+                            <div class="status-indicator success"></div>
+                            <span>🗄️ Database Connection: Active & Secure</span>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-indicator success"></div>
+                            <span>🔐 Authentication Service: Operational</span>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-indicator success"></div>
+                            <span>🌐 API Gateway: Online & Responsive</span>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-indicator success"></div>
+                            <span>🔄 Backup Systems: Synchronized</span>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-indicator success"></div>
+                            <span>📊 Real-time Analytics: Active</span>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-indicator success"></div>
+                            <span>🔒 Security Protocols: Enforced</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load scripts -->
+    <script src="js/auth_scripts.js"></script>
+    <script src="js/dashboard_scripts.js"></script>
+   
+</body>
+</html>

@@ -1,0 +1,316 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summary Reports - ClearBooks</title>
+    <link rel="stylesheet" href="css/summary_reports_styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!--Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>ClearBooks</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="index.html">📊 Dashboard</a></li>
+                <li><a href="coa.html">📋 Chart of Accounts</a></li>
+                <li><a href="gl_mapping.html">🔗 GL Mapping</a></li>
+                <li><a href="voucher_entry.html">📝 Voucher Entry</a></li>
+                <li><a href="payment_form.html">💳 Payment Form</a></li>
+                <li><a href="receipts.html">🧾 Receipts</a></li>
+                <li><a href="searchview_form.html">🔍 Search & Reports</a></li>
+                <li><a href="reports.html">📊 Reports</a></li>
+                <li><a href="summary_reports.html" class="active">📈 Summary Reports</a></li>
+            </ul>
+        </div>
+
+        <!--Main Content -->
+        <div class="main-content">
+            <div class="content-header">
+                <h1>Summary Reports</h1>
+                <div class="header-actions">
+                    <button id="refresh-all-btn" class="refresh-btn">Refresh All</button>
+                    <button id="export-dashboard-btn" class="export-btn">Export Dashboard</button>
+                </div>
+            </div>
+
+            <!--Loading and Error States -->
+            <div id="loading-indicator" class="loading-indicator">
+                <div class="loading-spinner"></div>
+                <p>Loading dashboard data...</p>
+            </div>
+
+            <div id="error-container" class="error-container" style="display: none;">
+                <div class="error-content">
+                    <h3>Error Loading Data</h3>
+                    <p id="error-message">An error occurred while loading the dashboard data.</p>
+                    <button id="retry-btn" class="retry-btn">Retry</button>
+                </div>
+            </div>
+
+            <!--Dashboard Content -->
+            <div id="dashboard-content" class="dashboard-content" style="display: none;">
+
+                <!--Financial Overview Cards -->
+                <div class="overview-section">
+                    <h2 class="section-title">Financial Overview</h2>
+                    <div class="overview-grid">
+                        <div class="overview-card">
+                            <div class="card-icon">💰</div>
+                            <div class="card-content">
+                                <h3>Total Assets</h3>
+                                <p class="amount" id="total-assets">$0.00</p>
+                                <span class="period">As of today</span>
+                            </div>
+                        </div>
+                        <div class="overview-card">
+                            <div class="card-icon">📊</div>
+                            <div class="card-content">
+                                <h3>Total Liabilities</h3>
+                                <p class="amount" id="total-liabilities">$0.00</p>
+                                <span class="period">As of today</span>
+                            </div>
+                        </div>
+                        <div class="overview-card">
+                            <div class="card-icon">🏛️</div>
+                            <div class="card-content">
+                                <h3>Total Equity</h3>
+                                <p class="amount" id="total-equity">$0.00</p>
+                                <span class="period">As of today</span>
+                            </div>
+                        </div>
+                        <div class="overview-card">
+                            <div class="card-icon">📈</div>
+                            <div class="card-content">
+                                <h3>Net Income (YTD)</h3>
+                                <p class="amount" id="net-income">$0.00</p>
+                                <span class="period">Year to date</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Charts Section -->
+                <div class="charts-section">
+
+                    <!--Account Distribution -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3>Account Type Distribution</h3>
+                            <div class="chart-actions">
+
+                            </div>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="account-distribution-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <!--Monthly Trends -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3>Monthly Revenue vs Expenses</h3>
+                            <div class="chart-actions">
+                                <select id="trend-period" class="period-select">
+                                    <option value="6">Last 6 Months</option>
+                                    <option value="12" selected>Last 12 Months</option>
+                                    <option value="24">Last 24 Months</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="monthly-trends-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <!--Cash Flow Analysis -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3>Cash Flow Analysis</h3>
+                            <div class="chart-actions">
+                                <select id="cashflow-period" class="period-select">
+                                    <option value="3">Last 3 Months</option>
+                                    <option value="6" selected>Last 6 Months</option>
+                                    <option value="12">Last 12 Months</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="cash-flow-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <!--Top Accounts -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3>Top Active Accounts</h3>
+                            <div class="chart-actions">
+                                <select id="top-accounts-type" class="period-select">
+                                    <option value="revenue">Revenue Accounts</option>
+                                    <option value="expense" selected>Expense Accounts</option>
+                                    <option value="asset">Asset Accounts</option>
+                                    <option value="liability">Liability Accounts</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="top-accounts-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <!--Transaction Volume -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3>Transaction Volume Trends</h3>
+                            <div class="chart-actions">
+                                <select id="volume-metric" class="period-select">
+                                    <option value="count" selected>Transaction Count</option>
+                                    <option value="amount">Transaction Amount</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="transaction-volume-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <!--Balance Sheet Summary -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3>Balance Sheet Summary</h3>
+                            <div class="chart-actions">
+
+                            </div>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="balance-sheet-chart"></canvas>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!--Summary Tables -->
+                <div class="summary-tables">
+                    <div class="table-container">
+                        <h3>Quick Financial Summary</h3>
+                        <table id="financial-summary-table" class="summary-table">
+                            <thead>
+                                <tr>
+                                    <th>Metric</th>
+                                    <th>Current Period</th>
+                                    <th>Previous Period</th>
+                                    <th>Change</th>
+                                    <th>Change %</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!--Data will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+   
+    <script src="js/auth_scripts.js"></script>
+    <script>
+        //CHART COLORS - ONLY FOR ACCOUNT TYPE DISTRIBUTION
+        const ACCOUNT_TYPE_COLORS = {
+            'Assets': '#28a745',      // Green
+            'Liabilities': '#dc3545', // Red
+            'Equity': '#6f42c1',      // Purple
+            'Revenue': '#007bff',     // Blue
+            'Expenses': '#fd7e14',    // Orange
+            'Other': '#6c757d'        // Gray
+        };
+
+        
+        function createAccountDistributionChart() {
+            const ctx = document.getElementById('account-distribution-chart').getContext('2d');
+
+            // Mock data 
+            const data = {
+                'Assets': 45,
+                'Liabilities': 20,
+                'Equity': 15,
+                'Revenue': 12,
+                'Expenses': 8
+            };
+
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(data),
+                    datasets: [{
+                        data: Object.values(data),
+                        backgroundColor: Object.keys(data).map(key => ACCOUNT_TYPE_COLORS[key] || '#6c757d'),
+                        borderColor: '#ffffff',
+                        borderWidth: 3,
+                        hoverBorderWidth: 5,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true,
+                                pointStyle: 'circle'
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    return context.label + ': ' + context.parsed + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        //Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function () {
+            // Hide loading after 2 seconds and show dashboard
+            setTimeout(() => {
+                document.getElementById('loading-indicator').style.display = 'none';
+                document.getElementById('dashboard-content').style.display = 'block';
+
+                // Create the account distribution chart with new colors
+                createAccountDistributionChart();
+
+                // Populate overview cards with mock data
+                document.getElementById('total-assets').textContent = '$125,000';
+                document.getElementById('total-liabilities').textContent = '$45,000';
+                document.getElementById('total-equity').textContent = '$80,000';
+                document.getElementById('net-income').textContent = '$15,000';
+            }, 2000);
+        });
+
+        // Button event listeners
+        document.getElementById('refresh-all-btn').addEventListener('click', function () {
+            location.reload();
+        });
+
+        document.getElementById('export-dashboard-btn').addEventListener('click', function () {
+            alert('Dashboard exported successfully!');
+        });
+    </script>
+    <script src="js/summary_reports_scripts.js"></script>
+</body>
+</html>

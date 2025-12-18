@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Form</title>
+    <link rel="stylesheet" href="css/payment_form_styles.css">
+</head>
+<body>
+    <div class="container">
+        <!--Sidebar-->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>ClearBooks</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="index.html" class="active">📊 Dashboard</a></li>
+                <li><a href="coa.html">📋 Chart of Accounts</a></li>
+                <li><a href="gl_mapping.html">🔗 GL Mapping</a></li>
+                <li><a href="voucher_entry.html">📝 Voucher Entry</a></li>
+                <li><a href="payment_form.html">💳 Payment Form</a></li>
+                <li><a href="receipts.html">🧾 Receipts</a></li>
+                <li><a href="searchview_form.html">🔍 Search & Reports</a></li>
+                <li><a href="reports.html">📊 Reports</a></li>
+                <li><a href="summary_reports.html">📈 Summary Reports</a></li>
+            </ul>
+        </div>
+
+        <!--Main Content-->
+        <div class="main-content">
+            <header class="content-header">
+                <h1>Payment Form</h1>
+                <button id="add-payment-btn">New Payment</button>
+            </header>
+
+            <section class="content">
+                <div class="table-container">
+                    <table id="payments-table" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Payment No</th>
+                                <th>Date</th>
+                                <th>Payee</th>
+                                <th>Payment Method</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--Data will be dynamically populated -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!--Payment Modal-->
+    <div id="payment-modal" class="modal">
+        <div class="modal-content wide-modal">
+            <span id="close-modal" class="close">&times;</span>
+            <h2>New Payment Entry</h2>
+            <form id="payment-form">
+                <div class="form-header">
+                    <div class="form-group">
+                        <label for="payment-number">Payment Number</label>
+                        <input type="text" id="payment-number" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="payment-date">Payment Date</label>
+                        <input type="date" id="payment-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="payment-method">Payment Method</label>
+                        <select id="payment-method" required>
+                            <option value="">Select Method</option>
+                            <option value="Cash">Cash</option>
+                            <option value="Bank Transfer">Bank Transfer</option>
+                            <option value="Check">Check</option>
+                            <option value="Credit Card">Credit Card</option>
+                            <option value="Online Payment">Online Payment</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="payee-name">Payee Name</label>
+                        <input type="text" id="payee-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="account-id">Pay From Account</label>
+                        <select id="account-id" required>
+                            <option value="">Select Account</option>
+                            <!--Accounts will be dynamically populated-->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="reference-number">Reference Number</label>
+                        <input type="text" id="reference-number" placeholder="Check/Transaction ID">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group" style="grid-column: 1 / -1;">
+                        <label for="description">Description</label>
+                        <textarea id="description" rows="3" placeholder="Payment description or notes"></textarea>
+                    </div>
+                </div>
+
+                <div class="voucher-selection">
+                    <h3>Select Vouchers to Pay</h3>
+                    <div class="form-group">
+                        <label for="voucher-dropdown">Select Voucher</label>
+                        <select id="voucher-dropdown">
+                            <option value="">Select Voucher</option>
+                            <!--Vouchers will be dynamically populated-->
+                        </select>
+                    </div>
+                    <table id="payment-details-table">
+                        <thead>
+                            <tr>
+                                <th>Voucher No</th>
+                                <th>Date</th>
+                                <th>Total Amount</th>
+                                <th>Paid Amount</th>
+                                <th>Remaining</th>
+                                <th>Amount to Pay</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--Voucher details will be populated here-->
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5" class="text-right"><strong>Total Payment Amount</strong></td>
+                                <td id="total-payment-amount">0.00</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="attachments-section">
+                    <h3>Attachments</h3>
+                    <div class="file-upload">
+                        <input type="file" id="attachment-input" multiple accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx">
+                        <label for="attachment-input">Click to select files or drag and drop</label>
+                        <div id="attachment-list"></div>
+                    </div>
+                </div>
+
+                <div class="form-footer">
+                    <span class="error-message" id="payment-error"></span>
+                    <div class="button-group">
+                        <button type="button" id="save-draft-btn">Save as Draft</button>
+                        <button type="button" id="submit-payment-btn">Submit Payment</button>
+                        <button type="button" id="print-payment-btn">Print Payment</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+  
+    <script src="js/auth_scripts.js"></script>
+    <script src="js/payment_form_scripts.js"></script>
+</body>
+</html>

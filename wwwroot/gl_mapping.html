@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GL Mappings</title>
+    <link rel="stylesheet" href="css/gl_mapping_styles.css">
+</head>
+<body>
+    <div class="container">
+        <!--Sidebar-->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>ClearBooks</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="index.html" class="active">📊 Dashboard</a></li>
+                <li><a href="coa.html">📋 Chart of Accounts</a></li>
+                <li><a href="gl_mapping.html">🔗 GL Mapping</a></li>
+                <li><a href="voucher_entry.html">📝 Voucher Entry</a></li>
+                <li><a href="payment_form.html">💳 Payment Form</a></li>
+                <li><a href="receipts.html">🧾 Receipts</a></li>
+                <li><a href="searchview_form.html">🔍 Search & Reports</a></li>
+                <li><a href="reports.html">📊 Reports</a></li>
+                <li><a href="summary_reports.html">📈 Summary Reports</a></li>
+</div>
+
+        <!--Main Content-->
+        <div class="main-content">
+            <header class="content-header">
+                <h1>General Ledger Mapping</h1>
+                <button id="add-mapping-btn">Add Mapping</button>
+            </header>
+
+            <section class="content">
+                <div class="table-container">
+                    <table id="mappings-table" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Mapping ID</th>
+                                <th>Transaction Type</th>
+                                <th>Debit Account</th>
+                                <th>Credit Account</th>
+                                <th>Created At</th>
+                                <th>Updated At</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--Data will be dynamically populated-->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!--Mapping Modal (for both Add and Edit)-->
+    <div id="mapping-modal" class="modal">
+        <div class="modal-content">
+            <span id="close-modal" class="close">&times;</span>
+            <h2>Add New Mapping</h2>
+            <form id="mapping-form">
+                <div class="form-group">
+                    <label for="transaction-type">Transaction Type</label>
+                    <input type="text" id="transaction-type" required>
+                    <span class="error-message" id="transaction-type-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="debit-account">Debit Account</label>
+                    <select id="debit-account" required>
+                        <option value="">Select Debit Account</option>
+                        <!--Options will be populated dynamically-->
+                    </select>
+                    <span class="error-message" id="debit-account-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="credit-account">Credit Account</label>
+                    <select id="credit-account" required>
+                        <option value="">Select Credit Account</option>
+                        <!--Options will be populated dynamically-->
+                    </select>
+                    <span class="error-message" id="credit-account-error"></span>
+                </div>
+
+                <button type="submit">Add Mapping</button>
+            </form>
+        </div>
+    </div>
+    <script src="js/auth_scripts.js"></script>
+    <script src="./js/gl_mappings_scripts.js"></script>t>
+</body>
+</html>

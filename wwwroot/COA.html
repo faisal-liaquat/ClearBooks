@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart of Accounts</title>
+    <link rel="stylesheet" href="css/coa_styles.css">
+</head>
+<body>
+    <div class="container">
+        <!--Sidebar-->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>ClearBooks</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="index.html" class="active">📊 Dashboard</a></li>
+                <li><a href="coa.html">📋 Chart of Accounts</a></li>
+                <li><a href="gl_mapping.html">🔗 GL Mapping</a></li>
+                <li><a href="voucher_entry.html">📝 Voucher Entry</a></li>
+                <li><a href="payment_form.html">💳 Payment Form</a></li>
+                <li><a href="receipts.html">🧾 Receipts</a></li>
+                <li><a href="searchview_form.html">🔍 Search & Reports</a></li>
+                <li><a href="reports.html">📊 Reports</a></li>
+                <li><a href="summary_reports.html">📈 Summary Reports</a></li>
+
+            </ul>
+        </div>
+
+        <!--Main Content-->
+        <div class="main-content">
+            <header class="content-header">
+                <h1>Chart of Accounts</h1>
+                <button id="add-account-btn">Add Account</button>
+            </header>
+
+            <section class="content">
+                <div class="table-container">
+                    <table id="accounts-table" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Account ID</th>
+                                <th>Account Number</th>
+                                <th>Account Name</th>
+                                <th>Account Type</th>
+                                <th>Subaccount</th>
+                                <th>Parent Account</th>
+                                <th>Description</th>
+                                <th>Created At</th>
+                                <th>Updated At</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--Data will be dynamically populated-->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!--Account Modal (for both Add and Edit)-->
+    <div id="add-account-modal" class="modal">
+        <div class="modal-content">
+            <span id="close-modal" class="close">&times;</span>
+            <h2>Add New Account</h2>
+            <form id="add-account-form">
+                <div class="form-group">
+                    <label for="account-number">Account Number</label>
+                    <input type="number" id="account-number" required>
+                    <span class="error-message" id="account-number-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="account-name">Account Name</label>
+                    <input type="text" id="account-name" required pattern="[A-Za-z\s]+" title="Only letters and spaces are allowed">
+                    <span class="error-message" id="account-name-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="account-type">Account Type</label>
+                    <select id="account-type" required>
+                        <option value="">Select Account Type</option>
+                        <option value="Asset">Asset</option>
+                        <option value="Liability">Liability</option>
+                        <option value="Equity">Equity</option>
+                        <option value="Revenue">Revenue</option>
+                        <option value="Expense">Expense</option>
+                    </select>
+                    <span class="error-message" id="account-type-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="subaccount">Subaccount</label>
+                    <select id="subaccount">
+                        <option value="">Select Subaccount</option>
+                        <!--Options will be dynamically populated based on account type-->
+                    </select>
+                    <span class="error-message" id="subaccount-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="parent-account">Parent Account</label>
+                    <input type="number" id="parent-account">
+                    <span class="error-message" id="parent-account-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description"></textarea>
+                    <span class="error-message" id="description-error"></span>
+                </div>
+
+                <button type="submit">Add Account</button>
+            </form>
+        </div>
+    </div>
+    <script src="js/auth_scripts.js"></script>
+    <script src="./js/coa_scripts.js"></script>
+</body>
+</html>

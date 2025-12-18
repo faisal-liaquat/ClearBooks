@@ -1,0 +1,192 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search View Form</title>
+    <link rel="stylesheet" href="css/searchview_form_styles.css">
+</head>
+<body>
+    <div class="container">
+        <!--Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>ClearBooks</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="index.html" class="active">📊 Dashboard</a></li>
+                <li><a href="coa.html">📋 Chart of Accounts</a></li>
+                <li><a href="gl_mapping.html">🔗 GL Mapping</a></li>
+                <li><a href="voucher_entry.html">📝 Voucher Entry</a></li>
+                <li><a href="payment_form.html">💳 Payment Form</a></li>
+                <li><a href="receipts.html">🧾 Receipts</a></li>
+                <li><a href="searchview_form.html">🔍 Search & Reports</a></li>
+                <li><a href="reports.html">📊 Reports</a></li>
+                <li><a href="summary_reports.html">📈 Summary Reports</a></li>
+            </ul>
+        </div>
+
+        <!--Main Content -->
+        <div class="main-content">
+            <header class="content-header">
+                <h1>Search View Form</h1>
+            </header>
+
+            <section class="content">
+                <!--Search Filters -->
+                <div class="search-filters">
+                    <form id="search-form">
+                        <div class="filter-row">
+                            <div class="form-group">
+                                <label for="entity-type">Entity Type</label>
+                                <select id="entity-type" required>
+                                    <option value="">Select Entity Type</option>
+                                    <option value="chartofaccount">Chart of Account</option>
+                                    <option value="glmapping">GL Mapping</option>
+                                    <option value="voucher">Voucher</option>
+                                    <option value="payment">Payment</option>
+                                    <option value="receipt">Receipt</option>
+                                </select>
+                            </div>
+
+                            <!--Filter Selector (will be populated based on entity selection) -->
+                            <div class="form-group" id="filter-type-container" style="display: none;">
+                                <label for="filter-type">Filter By</label>
+                                <select id="filter-type">
+                                    <!-- Options will be populated dynamically -->
+                                </select>
+                            </div>
+
+                            <!--Dynamic Value Selector (will be populated based on filter selection) -->
+                            <div class="form-group" id="filter-value-container" style="display: none;">
+                                <label for="filter-value">Select Value</label>
+                                <select id="filter-value">
+                                    <!--Options will be populated dynamically -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="filter-row">
+                            <div class="form-actions">
+                                <button type="submit" id="search-btn">Search</button>
+                                <button type="button" id="reset-btn">Reset Filters</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!--Loading indicator -->
+                <div class="loading-indicator" id="loading-indicator" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Loading results...</p>
+                </div>
+
+                <!--Error message container -->
+                <div id="error-container" class="error-container" style="display: none;"></div>
+
+                <!--Results Table Container -->
+                <div class="table-container">
+                    <!--Chart of Accounts Table -->
+                    <table id="coa-table" class="data-table" style="display: none;">
+                        <thead>
+                            <tr>
+                                <th data-sort="accountId">Account ID</th>
+                                <th data-sort="accountNumber">Account Number</th>
+                                <th data-sort="accountName">Account Name</th>
+                                <th data-sort="accountType">Account Type</th>
+                                <th data-sort="subaccount">Subaccount</th>
+                                <th data-sort="description">Description</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+
+                    <!--GL Mapping Table -->
+                    <table id="glmapping-table" class="data-table" style="display: none;">
+                        <thead>
+                            <tr>
+                                <th data-sort="mappingId">Mapping ID</th>
+                                <th data-sort="transactionType">Transaction Type</th>
+                                <th data-sort="debitAccount">Debit Account</th>
+                                <th data-sort="creditAccount">Credit Account</th>
+                                <th data-sort="createdAt">Created At</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+
+                    <!--Voucher Table -->
+                    <table id="voucher-table" class="data-table" style="display: none;">
+                        <thead>
+                            <tr>
+                                <th data-sort="voucherId">Voucher ID</th>
+                                <th data-sort="voucherNumber">Voucher Number</th>
+                                <th data-sort="voucherDate">Date</th>
+                                <th data-sort="transactionType">Transaction Type</th>
+                                <th data-sort="totalAmount">Total Amount</th>
+                                <th data-sort="status">Status</th>
+                                <th data-sort="description">Description</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+
+                    <!--Payment Table -->
+                    <table id="payment-table" class="data-table" style="display: none;">
+                        <thead>
+                            <tr>
+                                <th data-sort="paymentId">Payment ID</th>
+                                <th data-sort="paymentNumber">Payment Number</th>
+                                <th data-sort="paymentDate">Date</th>
+                                <th data-sort="payeeName">Payee Name</th>
+                                <th data-sort="paymentMethod">Payment Method</th>
+                                <th data-sort="totalAmount">Total Amount</th>
+                                <th data-sort="status">Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+
+                    <!--Receipt Table -->
+                    <table id="receipt-table" class="data-table" style="display: none;">
+                        <thead>
+                            <tr>
+                                <th data-sort="receiptId">Receipt ID</th>
+                                <th data-sort="receiptNumber">Receipt Number</th>
+                                <th data-sort="date">Date</th>
+                                <th data-sort="payerName">Payer Name</th>
+                                <th data-sort="amount">Amount</th>
+                                <th data-sort="paymentMethod">Payment Method</th>
+                                <th data-sort="description">Description</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <!--Pagination -->
+                <div class="pagination">
+                    <button id="prev-page" disabled>Previous</button>
+                    <span id="page-info">Page 1 of 1</span>
+                    <button id="next-page" disabled>Next</button>
+                    <select id="page-size">
+                        <option value="10">10 per page</option>
+                        <option value="25">25 per page</option>
+                        <option value="50">50 per page</option>
+                        <option value="100">100 per page</option>
+                    </select>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="js/auth_scripts.js"></script>
+
+    <script src="./js/searchview_form_scripts.js"></script>
+</body>
+</html>

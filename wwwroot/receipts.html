@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipts Form</title>
+    <link rel="stylesheet" href="css/receipts_styles.css">
+</head>
+<body>
+    <div class="container">
+        <!--Sidebar-->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>ClearBooks</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="index.html" class="active">📊 Dashboard</a></li>
+                <li><a href="coa.html">📋 Chart of Accounts</a></li>
+                <li><a href="gl_mapping.html">🔗 GL Mapping</a></li>
+                <li><a href="voucher_entry.html">📝 Voucher Entry</a></li>
+                <li><a href="payment_form.html">💳 Payment Form</a></li>
+                <li><a href="receipts.html">🧾 Receipts</a></li>
+                <li><a href="searchview_form.html">🔍 Search & Reports</a></li>
+                <li><a href="reports.html">📊 Reports</a></li>
+                <li><a href="summary_reports.html">📈 Summary Reports</a></li>
+            </ul>
+        </div>
+
+        <!--Main Content-->
+        <div class="main-content">
+            <header class="content-header">
+                <h1>Receipts Management</h1>
+                <button id="add-receipt-btn">Add Receipt</button>
+            </header>
+
+            <section class="content">
+                <div class="table-container">
+                    <table id="receipts-table" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Receipt ID</th>
+                                <th>Receipt Number</th>
+                                <th>Payer Name</th>
+                                <th>Amount</th>
+                                <th>Currency</th>
+                                <th>Date</th>
+                                <th>Payment Method</th>
+                                <th>Description</th>
+                                <th>Created At</th>
+                                <th>Updated At</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--Data will be dynamically populated -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!--Receipt Modal (for both Add and Edit) -->
+    <div id="add-receipt-modal" class="modal">
+        <div class="modal-content">
+            <span id="close-modal" class="close">&times;</span>
+            <h2>Add New Receipt</h2>
+            <form id="add-receipt-form">
+                <div class="form-group">
+                    <label for="receipt-number">Receipt Number</label>
+                    <input type="text" id="receipt-number" required>
+                    <span class="error-message" id="receipt-number-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="payer-name">Payer Name</label>
+                    <input type="text" id="payer-name" required>
+                    <span class="error-message" id="payer-name-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <input type="number" id="amount" step="0.01" required>
+                    <span class="error-message" id="amount-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="currency">Currency</label>
+                    <select id="currency" required>
+                        <option value="">Select Currency</option>
+                        <option value="USD">USD</option>
+                        <option value="EUR">EUR</option>
+                        <option value="GBP">GBP</option>
+                        <option value="JPY">JPY</option>
+                        <option value="CAD">CAD</option>
+                        <option value="AUD">AUD</option>
+                    </select>
+                    <span class="error-message" id="currency-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <input type="date" id="date" required>
+                    <span class="error-message" id="date-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="payment-method">Payment Method</label>
+                    <select id="payment-method" required>
+                        <option value="">Select Payment Method</option>
+                        <option value="Cash">Cash</option>
+                        <option value="Credit Card">Credit Card</option>
+                        <option value="Bank Transfer">Bank Transfer</option>
+                        <option value="Check">Check</option>
+                        <option value="PayPal">PayPal</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <span class="error-message" id="payment-method-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" required></textarea>
+                    <span class="error-message" id="description-error"></span>
+                </div>
+
+                <button type="submit">Add Receipt</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/auth_scripts.js"></script>
+
+    <script src="./js/receipts_scripts.js"></script>
+</body>
+</html>

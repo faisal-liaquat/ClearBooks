@@ -1,0 +1,6 @@
+@ClearBooksFYP_HostAddress = http://localhost:5291
+
+GET {{ClearBooksFYP_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

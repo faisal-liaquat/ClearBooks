@@ -1,0 +1,549 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports</title>
+    <link rel="stylesheet" href="css/reports_styles.css">
+</head>
+<body>
+    <div class="container">
+        <!--sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>ClearBooks</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="index.html" class="active">📊 Dashboard</a></li>
+                <li><a href="coa.html">📋 Chart of Accounts</a></li>
+                <li><a href="gl_mapping.html">🔗 GL Mapping</a></li>
+                <li><a href="voucher_entry.html">📝 Voucher Entry</a></li>
+                <li><a href="payment_form.html">💳 Payment Form</a></li>
+                <li><a href="receipts.html">🧾 Receipts</a></li>
+                <li><a href="searchview_form.html">🔍 Search & Reports</a></li>
+                <li><a href="reports.html">📊 Reports</a></li>
+                <li><a href="summary_reports.html">📈 Summary Reports</a></li>
+            </ul>
+        </div>
+
+        <!--Main Content-->
+        <div class="main-content">
+            <header class="content-header">
+                <h1>Financial Reports</h1>
+            </header>
+
+            <section class="content">
+                <!--Report Selection-->
+                <div class="report-selector">
+                    <div class="report-tabs">
+                        <button class="tab-btn active" data-report="general-ledger">Journal</button>
+                        <button class="tab-btn" data-report="trial-balance">Trial Balance</button>
+                    
+                        <button class="tab-btn" data-report="profit-loss">Profit & Loss</button>
+                        <button class="tab-btn" data-report="balance-sheet">Balance Sheet</button>
+                        <button class="tab-btn" data-report="account-ledger">General Ledger</button>
+                    </div>
+                </div>
+
+                <!--Report Filters-->
+                <div class="report-filters">
+                    <!--General Ledger Filters-->
+                    <div id="general-ledger-filters" class="filter-section active">
+                        <div class="filter-row">
+                            <div class="form-group">
+                                <label for="gl-from-date">From Date</label>
+                                <input type="date" id="gl-from-date">
+                            </div>
+                            <div class="form-group">
+                                <label for="gl-to-date">To Date</label>
+                                <input type="date" id="gl-to-date">
+                            </div>
+                            <div class="form-group">
+                                <label for="gl-account">Account (Optional)</label>
+                                <select id="gl-account">
+                                    <option value="">All Accounts</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <button id="generate-gl-btn" class="generate-btn">Generate Report</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Trial Balance Filters-->
+                    <div id="trial-balance-filters" class="filter-section">
+                        <div class="filter-row">
+                            <div class="form-group">
+                                <label for="tb-as-of-date">As Of Date</label>
+                                <input type="date" id="tb-as-of-date">
+                            </div>
+                            <div class="form-group">
+                                <button id="generate-tb-btn" class="generate-btn">Generate Report</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Income Statement Filters-->
+                    <div id="income-statement-filters" class="filter-section">
+                        <div class="filter-row">
+                            <div class="form-group">
+                                <label for="is-from-date">From Date</label>
+                                <input type="date" id="is-from-date">
+                            </div>
+                            <div class="form-group">
+                                <label for="is-to-date">To Date</label>
+                                <input type="date" id="is-to-date">
+                            </div>
+                            <div class="form-group">
+                                <button id="generate-is-btn" class="generate-btn">Generate Report</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Profit & Loss Filters-->
+                    <div id="profit-loss-filters" class="filter-section">
+                        <div class="filter-row">
+                            <div class="form-group">
+                                <label for="pl-from-date">From Date</label>
+                                <input type="date" id="pl-from-date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pl-to-date">To Date</label>
+                                <input type="date" id="pl-to-date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pl-comparison">Compare With</label>
+                                <select id="pl-comparison">
+                                    <option value="none">No Comparison</option>
+                                    <option value="previous-period">Previous Period</option>
+                                    <option value="previous-year">Previous Year</option>
+                                    <option value="budget">Budget</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <button id="generate-pl-btn" class="generate-btn">Generate Report</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Balance Sheet Filters-->
+                    <div id="balance-sheet-filters" class="filter-section">
+                        <div class="filter-row">
+                            <div class="form-group">
+                                <label for="bs-as-of-date">As Of Date</label>
+                                <input type="date" id="bs-as-of-date">
+                            </div>
+                            <div class="form-group">
+                                <button id="generate-bs-btn" class="generate-btn">Generate Report</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Account Ledger Filters-->
+                    <div id="account-ledger-filters" class="filter-section">
+                        <div class="filter-row">
+                            <div class="form-group">
+                                <label for="al-account">Account</label>
+                                <select id="al-account" required>
+                                    <option value="">Select Account</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="al-from-date">From Date</label>
+                                <input type="date" id="al-from-date">
+                            </div>
+                            <div class="form-group">
+                                <label for="al-to-date">To Date</label>
+                                <input type="date" id="al-to-date">
+                            </div>
+                            <div class="form-group">
+                                <button id="generate-al-btn" class="generate-btn">Generate Report</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Loading Indicator-->
+                <div id="loading-indicator" class="loading-indicator" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Generating report...</p>
+                </div>
+
+                <!--Error Container-->
+                <div id="error-container" class="error-container" style="display: none;"></div>
+
+                <!--Report Results-->
+                <div class="report-results">
+                    <!--General Ledger Report-->
+                    <div id="general-ledger-report" class="report-section active">
+                        <div class="report-header">
+                            <h3>Journal</h3>
+                            <div class="report-actions">
+                                <button id="export-gl-csv-btn" class="export-btn">Export CSV</button>
+                                <button id="export-gl-pdf-btn" class="export-pdf-btn">Export PDF</button>
+                                <button id="print-gl-btn" class="print-btn">Print</button>
+                            </div>
+                        </div>
+                        <div class="table-container">
+                            <table id="gl-table" class="report-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Voucher</th>
+                                        <th>Account</th>
+                                        <th>Description</th>
+                                        <th>Debit</th>
+                                        <th>Credit</th>
+                                        <th>Balance</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!--Data will be populated here-->
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="4"><strong>Totals</strong></td>
+                                        <td id="gl-total-debits"><strong>0.00</strong></td>
+                                        <td id="gl-total-credits"><strong>0.00</strong></td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!--Trial Balance Report-->
+                    <div id="trial-balance-report" class="report-section">
+                        <div class="report-header">
+                            <h3>Trial Balance</h3>
+                            <div class="report-actions">
+                                <button id="export-tb-csv-btn" class="export-btn">Export CSV</button>
+                                <button id="export-tb-pdf-btn" class="export-pdf-btn">Export PDF</button>
+                                <button id="print-tb-btn" class="print-btn">Print</button>
+                            </div>
+                        </div>
+                        <div class="table-container">
+                            <table id="tb-table" class="report-table">
+                                <thead>
+                                    <tr>
+                                        <th>Account Number</th>
+                                        <th>Account Name</th>
+                                        <th>Account Type</th>
+                                        <th>Debit Balance</th>
+                                        <th>Credit Balance</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!--Data will be populated here-->
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3"><strong>Totals</strong></td>
+                                        <td id="tb-total-debits"><strong>0.00</strong></td>
+                                        <td id="tb-total-credits"><strong>0.00</strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!--Income Statement Report-->
+                    <div id="income-statement-report" class="report-section">
+                        <div class="report-header">
+                            <h3>Income Statement</h3>
+                            <div class="report-actions">
+                                <button id="export-is-csv-btn" class="export-btn">Export CSV</button>
+                                <button id="export-is-pdf-btn" class="export-pdf-btn">Export PDF</button>
+                                <button id="print-is-btn" class="print-btn">Print</button>
+                            </div>
+                        </div>
+                        <div class="income-statement-container">
+                            <div class="income-section">
+                                <h4>Revenues</h4>
+                                <table id="is-revenue-table" class="report-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Account Number</th>
+                                            <th>Account Name</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--Revenue data will be populated here-->
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2"><strong>Total Revenue</strong></td>
+                                            <td id="is-total-revenue"><strong>0.00</strong></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <div class="income-section">
+                                <h4>Expenses</h4>
+                                <table id="is-expense-table" class="report-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Account Number</th>
+                                            <th>Account Name</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--Expense data will be populated here-->
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2"><strong>Total Expenses</strong></td>
+                                            <td id="is-total-expenses"><strong>0.00</strong></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <div class="net-income-section">
+                                <table class="report-table">
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Net Income</strong></td>
+                                            <td id="is-net-income"><strong>0.00</strong></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Profit & Loss Report-->
+                    <div id="profit-loss-report" class="report-section">
+                        <div class="report-header">
+                            <h3>Profit & Loss Statement (Income)</h3>
+                            <div class="report-actions">
+                                <button id="export-pl-csv-btn" class="export-btn">Export CSV</button>
+                                <button id="export-pl-pdf-btn" class="export-pdf-btn">Export PDF</button>
+                                <button id="print-pl-btn" class="print-btn">Print</button>
+                            </div>
+                        </div>
+
+                        <!--Key Metrics Section-->
+                        <div class="pl-summary-section">
+                            <div class="pl-summary-header">
+                                <h4>Financial Summary</h4>
+                                <div class="period-info">
+                                    <span id="pl-period-display"></span>
+                                </div>
+                            </div>
+
+                            <div id="pl-metrics" class="pl-metrics-container">
+                                <!--Metrics will be populated by JavaScript-->
+                            </div>
+                        </div>
+
+                        <!--Revenue Section-->
+                        <div class="pl-main-section">
+                            <div class="pl-section-header">
+                                <h4>Revenues</h4>
+                                <div class="section-total">
+                                    Total: <span id="pl-total-revenue" class="total-amount">0.00</span>
+                                </div>
+                            </div>
+                            <div id="pl-revenue-categories" class="pl-categories-container">
+                                <!--Revenue categories will be populated her-->
+                            </div>
+                        </div>
+
+                        <!--Expenses Section-->
+                        <div class="pl-main-section">
+                            <div class="pl-section-header">
+                                <h4>Expenses</h4>
+                                <div class="section-total">
+                                    Total: <span id="pl-total-expenses" class="total-amount">0.00</span>
+                                </div>
+                            </div>
+                            <div id="pl-expense-categories" class="pl-categories-container">
+                                <!--Expense categories will be populated-->
+                            </div>
+                        </div>
+
+                        <!--Net Income Section-->
+                        <div class="pl-net-income-section">
+                            <div class="net-income-header">
+                                <h4>Net Income Summary</h4>
+                            </div>
+                            <table class="report-table net-income-table">
+                                <tbody>
+                                    <tr class="summary-row">
+                                        <td class="summary-label"><strong>Total Revenue</strong></td>
+                                        <td class="summary-amount" id="pl-summary-revenue"><strong>0.00</strong></td>
+                                    </tr>
+                                    <tr class="summary-row">
+                                        <td class="summary-label"><strong>Total Expenses</strong></td>
+                                        <td class="summary-amount" id="pl-summary-expenses"><strong>0.00</strong></td>
+                                    </tr>
+                                    <tr class="net-income-row">
+                                        <td class="summary-label"><strong>Net Income</strong></td>
+                                        <td class="summary-amount" id="pl-net-income"><strong>0.00</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!--Comparison Sectio -->
+                        <div id="pl-comparison-section" class="pl-comparison-section" style="display: none;">
+                            <div class="comparison-header">
+                                <h4>Period Comparison</h4>
+                            </div>
+                            <div class="comparison-content">
+                                <table class="report-table comparison-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Current Period</th>
+                                            <th>Comparison Period</th>
+                                            <th>Variance</th>
+                                            <th>% Change</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="pl-comparison-data">
+                                        <!--Comparison data will be populated her-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Charts Section-->
+                        <div class="pl-charts-section" style="display: none;">
+                            <div class="charts-header">
+                                <h4>Visual Analysis</h4>
+                            </div>
+                            <div class="charts-container">
+                                <div class="chart-wrapper">
+                                    <canvas id="pl-revenue-chart"></canvas>
+                                </div>
+                                <div class="chart-wrapper">
+                                    <canvas id="pl-expense-chart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Balance Sheet Report-->
+                    <div id="balance-sheet-report" class="report-section">
+                        <div class="report-header">
+                            <h3>Balance Sheet</h3>
+                            <div class="report-actions">
+                                <button id="export-bs-csv-btn" class="export-btn">Export CSV</button>
+                                <button id="export-bs-pdf-btn" class="export-pdf-btn">Export PDF</button>
+                                <button id="print-bs-btn" class="print-btn">Print</button>
+                            </div>
+                        </div>
+                        <div class="balance-sheet-container">
+                            <div class="balance-section">
+                                <h4>Assets</h4>
+                                <table id="bs-assets-table" class="report-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Account Number</th>
+                                            <th>Account Name</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--Assets data will be populated here-->
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2"><strong>Total Assets</strong></td>
+                                            <td id="bs-total-assets"><strong>0.00</strong></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <div class="balance-section">
+                                <h4>Liabilities</h4>
+                                <table id="bs-liabilities-table" class="report-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Account Number</th>
+                                            <th>Account Name</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Liabilities data will be populate here-->
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2"><strong>Total Liabilities</strong></td>
+                                            <td id="bs-total-liabilities"><strong>0.00</strong></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <div class="balance-section">
+                                <h4>Equity</h4>
+                                <table id="bs-equity-table" class="report-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Account Number</th>
+                                            <th>Account Name</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!--Equity data will be populated here-->
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="2"><strong>Total Equity</strong></td>
+                                            <td id="bs-total-equity"><strong>0.00</strong></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Account Ledger Report-->
+                    <div id="account-ledger-report" class="report-section">
+                        <div class="report-header">
+                            <h3>General Ledger</h3>
+                            <div class="report-actions">
+                                <button id="export-al-csv-btn" class="export-btn">Export CSV</button>
+                                <button id="export-al-pdf-btn" class="export-pdf-btn">Export PDF</button>
+                                <button id="print-al-btn" class="print-btn">Print</button>
+                            </div>
+                        </div>
+                        <div id="account-info" class="account-info">
+                            <!--Account information will be displayed here-->
+                        </div>
+                        <div class="table-container">
+                            <table id="al-table" class="report-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Voucher</th>
+                                        <th>Description</th>
+                                        <th>Debit</th>
+                                        <th>Credit</th>
+                                        <th>Balance</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!--Data will be populated here-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="js/auth_scripts.js"></script>
+    <script src="js/reports_scripts.js"></script>
+</body>
+</html>
